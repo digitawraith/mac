@@ -1,0 +1,69 @@
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <iomanip>
+
+using namespace std;
+
+double totalResistance(string);
+int main()
+{
+    int choice;
+    string formula;
+
+    cout << "*** Welcome to Total Resistance Calculator Program ***" << endl;
+    cout << "1. Enter circuit formula." << endl;
+    cout << "2. Generate circuit randomly." << endl;
+    cout << "3. Show circuit formula." << endl;
+    cout << "4. Calculate total resistance." << endl;
+
+    while (choice !=-1)
+    {
+        cout << "Your choice (1-4) : ";
+        cin >> choice;
+        switch(choice)
+        {
+            case 1:
+                cout << "Enter circuit formula: ";
+                cin >> formula;
+                break;
+            case 3:
+                cout << "Circuit formula is " << formula << endl;
+                break;
+            case 4:
+                cout << "Circuit total resistance is " << totalResistance(formula) << " ohm" << endl ;
+                break;
+        }
+    }
+}
+
+double totalResistance (string tempFormula)
+{
+    double total=0;
+    double value[8];
+    char valueOperator[8];
+
+    stringstream assignation(tempFormula);
+
+    for(int i=0; i<4; i++)
+    {
+        assignation >> value[i];
+        assignation >> valueOperator[i];
+    }
+                                                //need to create word counter, and randomize case
+    for(int i=0; i<4; i++)
+    {
+        if(valueOperator[i]== '/')
+        {
+            total += ((value[i]*value[i+1])/(value[i]+value[i+1]));
+            i++;
+        }
+        else if(valueOperator[i]== '+')
+            total += value[i];
+        else if(i==3)
+            total += value[i];
+
+    }
+
+    return total;
+}
